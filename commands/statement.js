@@ -1,9 +1,6 @@
 import db from '../db'
 import Expense from '../schemas/expense'
-import pad from 'pad'
-import moment from 'moment'
-import currencyFormatter from 'currency-formatter'
-import { sumExpenses } from '../common/money'
+import { generateStatement } from '../common/generateStatement'
 
 const statementCommand = (bot, command) => {
   const { 
@@ -19,26 +16,9 @@ const statementCommand = (bot, command) => {
       console.error(error)
       return
     }
-    const totalBalance = sumExpenses(response) 
-     
-    const statement = response
-      .map((expense) => {
-        const date = moment(expense.date).format('DD/MM')
-        const expenseReceipt = [
-          `${expense.code} - ${date}`,
-          expense.description,
-          `${
-            currencyFormatter.format(Math.abs(expense.cost), { code: 'BRL' })
-          }${expense.cost > 0 ? ' (credit)' : ''}`,
-          '-----',
-        ]
-        return expenseReceipt.join('\n')
-      })
-
-    statement.push(`Total: ${currencyFormatter.format(Math.abs(totalBalance), { code: 'BRL' })}`)
 
     bot.sendMessage(
-      chat.id, `<code>${statement.join('\n')}</code>`, 
+      chat.id, generateStatement(response), 
       { parse_mode : "HTML" }
     )
   })
