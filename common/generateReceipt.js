@@ -1,5 +1,5 @@
 import moment from 'moment'
-import moneyFormat from './money'
+import { moneyFormat } from './money'
 import { formatVerboseUser } from './verboseUser'
 
 export const generateReceipt = (expense) => {
