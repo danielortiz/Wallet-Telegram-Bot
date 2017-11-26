@@ -14,6 +14,7 @@ const balanceCommand = (bot, command) => {
     chatID: chat.id
   }, (error, response) => {
     if (error) {
+      console.error(error)
       return
     }
     const totalBalance = sumExpenses(response)

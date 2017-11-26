@@ -19,6 +19,7 @@ const receiptCommand = (bot, command) => {
     code,
   }, (error, response) => {
     if (error) {
+      console.error(error)
       return
     }
     if (!response) {

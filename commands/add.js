@@ -43,8 +43,9 @@ const addCommand = (bot, command) => {
     }
   })
 
-  expense.save((err, savedExpense) => {
-    if (err) {
+  expense.save((error, savedExpense) => {
+    if (error) {
+      console.error(error)
       bot.sendMessage(
         command.chat.id, 
         'Sorry, your expense couldn\'t be saved'
