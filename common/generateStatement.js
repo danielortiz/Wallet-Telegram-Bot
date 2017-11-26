@@ -1,6 +1,5 @@
 import moment from 'moment'
-import currencyFormatter from 'currency-formatter'
-import { sumExpenses } from './money'
+import { sumExpenses, moneyFormat } from './money'
 
 export const generateStatement = (expenses = []) => {
   const totalBalance = sumExpenses(expenses) 
@@ -12,13 +11,13 @@ export const generateStatement = (expenses = []) => {
         `${expense.code} - ${date}`,
         expense.description,
         `${
-          currencyFormatter.format(Math.abs(expense.cost), { code: 'BRL' })
+          moneyFormat(expense.cost)
         }${expense.cost > 0 ? ' (credit)' : ''}`,
         '-----',
       ]
       return expenseReceipt.join('\n')
     })
 
-  statement.push(`Total: ${currencyFormatter.format(Math.abs(totalBalance), { code: 'BRL' })}`)
+  statement.push(`Total: ${moneyFormat(totalBalance, false)}`)
   return `<code>${statement.join('\n')}</code>`
 }

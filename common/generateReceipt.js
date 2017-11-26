@@ -1,6 +1,5 @@
 import moment from 'moment'
-import currencyFormatter from 'currency-formatter'
-
+import moneyFormat from './money'
 import { formatVerboseUser } from './verboseUser'
 
 export const generateReceipt = (expense) => {
@@ -9,7 +8,7 @@ export const generateReceipt = (expense) => {
     '-',
     `<strong>${expense.description}</strong>`,
     `(${expense.cost > 0 ? 'CREDIT' : 'EXPENSE'})`,
-    currencyFormatter.format(Math.abs(expense.cost), { code: 'BRL' }),
+    moneyFormat(expense.cost),
     '',
     `added on ${moment(expense.date).format('llll')}`,
     `by ${formatVerboseUser(expense.addedBy)}`,
