@@ -4,9 +4,9 @@ import { formatVerboseUser } from './verboseUser'
 
 export const generateReceipt = (expense) => {
   const receipt = [
-    `Ticket #${expense.code}`,
+    `Ticket ${expense.code}`,
     '-',
-    `${expense.description}`,
+    `<strong>${expense.description}</strong>`,
     `(${expense.cost > 0 ? 'credit' : 'expense'})`,
     moneyFormat(expense.cost),
     '',
@@ -20,5 +20,5 @@ export const generateReceipt = (expense) => {
     receipt.push('')
     receipt.push(`Bought @ ${expense.location.name}`)
   }
-  return `<code>${receipt.join('\n')}</code>`
+  return receipt.join('\n')
 }
