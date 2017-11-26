@@ -5,7 +5,7 @@ import mongoose, {
 // Schemas
 export const ExpenseSchema = new Schema({
   code: { type: Number, required: true },
-  chatID:  { type: Number, required: true, unique: true },
+  chatID:  { type: Number, required: true },
   description: { type: String, required: true, trim: true },
   cost: { type: Number, required: true },
   tags: [{ type: String, trim: true }],
