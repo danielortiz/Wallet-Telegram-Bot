@@ -20,21 +20,22 @@ const statementCommand = (bot, command) => {
       return
     }
     const totalBalance = sumExpenses(response) 
-
+     
     const statement = response
       .map((expense) => {
         const date = moment(expense.date).format('DD/MM')
-        const expenseName = ('(' + expense.code + ') ' + expense.description).slice(0, 18)  + ' '
-        const price = pad(15, 
-          currencyFormatter.format(expense.cost, { code: 'BRL', symbol: (expense.cost > 0 ? ' +' : '') })
-        , '-')
-        
-        return `${date} - ${pad(expenseName, 21, '-')}${price}`
+        const expenseReceipt = [
+          `${expense.code} - ${date}`,
+          expense.description,
+          `${
+            currencyFormatter.format(Math.abs(expense.cost), { code: 'BRL' })
+          }${expense.cost > 0 ? ' (credit)' : ''}`,
+          '-----',
+        ]
+        return expenseReceipt.join('\n')
       })
 
-    statement.push('--------------------------------------------')
-    statement.push(`Total: ${currencyFormatter.format(totalBalance, { code: 'BRL' })}`)
-      
+    statement.push(`Total: ${currencyFormatter.format(Math.abs(totalBalance), { code: 'BRL' })}`)
 
     bot.sendMessage(
       chat.id, `<code>${statement.join('\n')}</code>`, 
