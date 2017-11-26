@@ -6,8 +6,8 @@ export const generateReceipt = (expense) => {
   const receipt = [
     `Ticket #${expense.code}`,
     '-',
-    `<strong>${expense.description}</strong>`,
-    `(${expense.cost > 0 ? 'CREDIT' : 'EXPENSE'})`,
+    `${expense.description}`,
+    `(${expense.cost > 0 ? 'credit' : 'expense'})`,
     moneyFormat(expense.cost),
     '',
     `added on ${moment(expense.date).format('llll')}`,
@@ -20,5 +20,5 @@ export const generateReceipt = (expense) => {
     receipt.push('')
     receipt.push(`Bought @ ${expense.location.name}`)
   }
-  return receipt.join('\n')
+  return `<code>${receipt.join('\n')}</code>`
 }
