@@ -6,7 +6,7 @@ import './db'
 
 const bot = new TelegramBot(config.token, { polling: true })
 
-// Make commands listen to bots
+// Iterate over commands and make the bot listen to them
 keys(commands).forEach((command) => {
   bot.onText(new RegExp(`/${command}`), (msg) => commands[command](bot, msg))    
 })
